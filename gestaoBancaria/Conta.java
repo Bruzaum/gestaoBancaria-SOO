@@ -6,7 +6,6 @@ public class Conta extends Cliente {
     private String senha;
     private double[] saldo;
     private boolean status;
-    //private Cliente cliente;
 
     private String log = "";
 
@@ -17,18 +16,10 @@ public class Conta extends Cliente {
     
     this.senha = senha;
     this.saldo[0] = 0; //Corrente
-    this.saldo[1] = 0; //Poupança
+    this.saldo[1] = 0; //PoupanÃ§a
     this.status = true;
     }
 
-    //public Conta(String cpf, String nome, String telefone, String email, int idade, int numeroConta) {
-    //    this.numero = numeroConta;
-    //    //this.cliente = cliente;
-    //    this.senha = senha;
-    //    this.saldo = 0;
-    //    this.status = true;
-    //}
-    
 
     public int numero() {
         return this.numero;
