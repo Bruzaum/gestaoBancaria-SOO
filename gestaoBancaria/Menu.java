@@ -58,11 +58,37 @@ public class Menu {
             }
         }
         values[6] = String.valueOf(numeroConta);
-        
+        System.out.println();
         System.out.println("Conta criada com sucesso!\nO numero da sua conta eh: " + numeroConta);
         System.out.println();
         
         numeroConta++;
+        
+        return values;
+    }
+
+        public static String[] ALTERAR_CONTA() {
+
+        String[] values = new String[7];
+
+        System.out.print("As seguintes informaçoes ser serao alteradas:;\n");
+        System.out.print("Seu nome: ");
+        values[0] = Menu.SC.next();
+        
+        System.out.print("Idade: ");
+        values[5] = Menu.SC.next();
+
+        System.out.print("CPF: ");
+        values[1] = Menu.SC.next();
+
+        System.out.print("Telefone: ");
+        values[2] = Menu.SC.next();
+
+        System.out.print("Email: ");
+        values[3] = Menu.SC.next();
+        
+        System.out.print("Senha: ");
+        values[4] = Menu.SC.next();
         
         return values;
     }
@@ -80,40 +106,64 @@ public class Menu {
     }
 
     public static String[] DEPOSITAR() {
+        boolean check = true;
+        
         System.out.print("Informe os seguintes dados para o deposito.\n\n");
         String[] values = new String[3];
+        
+        System.out.print("Numero da conta: ");
+        values[1] = Menu.SC.next();
 
         System.out.print("[1] - Corrente\n");
         System.out.print("[2] - Poupanca\n");
         System.out.print("Tipo da conta: ");
         values[0] = Menu.SC.next();
+        
+        while (check) {
+            System.out.print("Informe o valor do deposito: ");
+            values[2] = Menu.SC.next();
+            var valor = Double.parseDouble(values[2]);
 
-        System.out.print("Numero da conta: ");
-        values[1] = Menu.SC.next();
-        System.out.print("Informe o valor do deposito: ");
-        values[2] = Menu.SC.next();
-
+            if (valor < 0.00) {
+                System.out.print("Inserir somente valores positivos\n");
+            }else {
+                check = false;
+            }
+        }
         return values;
     }
     
     public static String[] SACAR() {
+        boolean check = true;
+        
         System.out.print("Informe os seguintes dados para o saque.\n\n");
         String[] values = new String[3];
+        
+        System.out.print("Numero da conta: ");
+        values[1] = Menu.SC.next();
 
         System.out.print("[1] - Corrente\n");
         System.out.print("[2] - Poupanca\n");
         System.out.print("Tipo da conta: ");
         values[0] = Menu.SC.next();
+        
+        while (check) {
+            System.out.print("Informe o valor do saque: ");
+            values[2] = Menu.SC.next();
+            var valor = Double.parseDouble(values[2]);
 
-        System.out.print("Numero da conta: ");
-        values[1] = Menu.SC.next();
-        System.out.print("Informe o valor do saque: ");
-        values[2] = Menu.SC.next();
-
+            if (valor < 0.00) {
+                System.out.print("Inserir somente valores positivos\n");
+            }else {
+                check = false;
+            }
+        }
         return values;
     }    
 
     public static void BYE() {
+        System.out.println();
         System.out.print("Obrigado por utilizar nosso Banco!\n");
+        System.out.println();
     }
 }
