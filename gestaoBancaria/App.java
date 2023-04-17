@@ -1,7 +1,10 @@
+
 package gestaoBancaria.SOO;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+
 
 public class App {
     public static void main(String... args) {
@@ -18,7 +21,8 @@ public class App {
 
         String [] dados;
         String [] novosDados;
-        Banco BS = new Banco("Itau");
+        Banco BS = new Banco("Banco do Grupo 4");
+        List<Integer> listaContas = new ArrayList<>();
 
         while(validador){
           Menu.MENU_PRINCIPAL(BS.nome);
@@ -30,6 +34,7 @@ public class App {
                     idade = Integer.parseInt(dados[5]);
                     numeroConta = Integer.parseInt(dados[6]);
                     clientesCriados.add(new Conta(dados[1], dados[0], dados[2], dados[3], idade, numeroConta, dados[4]));
+                    listaContas.add(numeroConta);
                     break;
 
                 case "2":
@@ -42,9 +47,9 @@ public class App {
                         numeroConta = Integer.parseInt(dados[0]);
 
                         for (Conta conta : clientesCriados) {
-                            if(numeroConta != conta.getNumeroConta()){
+                            if(!listaContas.contains(numeroConta)){
                                 System.out.println("Cliente nao encontrado");
-                            } else{
+                            } else if (numeroConta == conta.getNumeroConta()){
                                 if (dados[1].equals(conta.getSenha())){
                                     System.out.println();
                                     System.out.println("Nome: " + conta.getNome());
@@ -77,11 +82,11 @@ public class App {
                         var valor = Double.parseDouble(dados[2]);
 
                         for (Conta conta : clientesCriados) {
-                            if(numeroConta != conta.getNumeroConta()){
+                            if(!listaContas.contains(numeroConta)){
                                 System.out.println();
                                 System.out.println("Cliente nao encontrado");
                                 System.out.println();
-                            } else{
+                            } else if (numeroConta == conta.getNumeroConta()){
                                 if (tipoConta == 1){
                                     saldoTemp = conta.getCorrente() + valor;
                                     conta.setCorrente(saldoTemp);
@@ -106,11 +111,11 @@ public class App {
                         var valor = Double.parseDouble(dados[2]);
 
                         for (Conta conta : clientesCriados) {
-                            if(numeroConta != conta.getNumeroConta()){
+                            if(!listaContas.contains(numeroConta)){
                                 System.out.println();
                                 System.out.println("Cliente nao encontrado");
                                 System.out.println();
-                            } else{
+                            } else if (numeroConta == conta.getNumeroConta()){
                                 if (tipoConta == 1){
                                     if (valor > conta.getCorrente()){
                                         System.out.println();
@@ -144,11 +149,11 @@ public class App {
                         numeroConta = Integer.parseInt(dados[0]);
 
                         for (Conta conta : clientesCriados) {
-                            if(numeroConta != conta.getNumeroConta()){
+                            if(!listaContas.contains(numeroConta)){
                                 System.out.println();
                                 System.out.println("Cliente nao encontrado");
                                 System.out.println();
-                            } else{
+                            } else if (numeroConta == conta.getNumeroConta()){
                                 if (dados[1].equals(conta.getSenha())){
                                     novosDados = new String[7];
                                     novosDados = Menu.ALTERAR_CONTA();
@@ -188,7 +193,7 @@ public class App {
                                     System.out.println("Senha Incorreta");
                                     System.out.println();
                                 }
-                            } else{
+                            } else if(!listaContas.contains(numeroConta)){
                                 System.out.println();
                                 System.out.println("Cliente nao encontrado");
                                 System.out.println();
@@ -219,6 +224,10 @@ public class App {
             }
         }
     }
-}
 
+    Object getGreeting() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+}
 

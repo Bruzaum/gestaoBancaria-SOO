@@ -1,7 +1,5 @@
 package gestaoBancaria.SOO;
 
-import gestaoBancaria.SOO.Cliente;
-
 
 public class Conta extends Cliente {
     private int numero;
@@ -44,4 +42,3 @@ public class Conta extends Cliente {
         this.saldo[1] = saldo;
     }  
 }
-
