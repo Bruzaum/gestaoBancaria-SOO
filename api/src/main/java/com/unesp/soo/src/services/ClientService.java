@@ -31,9 +31,11 @@ public class ClientService {
                 .build();
     }
 
-    public void insertClient(InsertingClientDTO insertingClientDTO) {
+    public ClientDTO insertClient(InsertingClientDTO insertingClientDTO) {
         ClientEntity clientEntity = fromInsertingDTOToEntity(insertingClientDTO);
         repository.save(clientEntity);
+
+        return fromEntityToDTO(clientEntity);
     }
 
     public ClientDTO findById(Long id) {
@@ -41,13 +43,11 @@ public class ClientService {
         return fromEntityToDTO(clientEntity);
     }
 
-    public ClientDTO sumIntoAccountValueById(Long id, double value) {
-        ClientEntity clientEntity = repository.sumIntoAccountValueById(id, value);
-        return fromEntityToDTO(clientEntity);
+    public void sumIntoAccountValueById(Long id, double value) {
+        repository.sumIntoAccountValueById(id, value);
     }
 
-    public ClientDTO subtractFromAccountValueById(Long id, double value) {
-        ClientEntity clientEntity = repository.subtractFromAccountValueById(id, value);
-        return fromEntityToDTO(clientEntity);
+    public void subtractFromAccountValueById(Long id, double value) {
+        repository.subtractFromAccountValueById(id, value);
     }
 }

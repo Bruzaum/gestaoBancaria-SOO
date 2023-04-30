@@ -12,12 +12,12 @@ public interface ClientRepository extends JpaRepository<ClientEntity, Long> {
 
     @Modifying
     @Transactional
-    @Query("UPDATE Client c SET c.accountValue = c.accountValue + :value WHERE c.id = :id")
-    ClientEntity sumIntoAccountValueById(Long id, Double value);
+    @Query("UPDATE ClientEntity c SET c.accountValue = c.accountValue + :value WHERE c.id = :id")
+    void sumIntoAccountValueById(Long id, Double value);
 
     @Modifying
     @Transactional
-    @Query("UPDATE Client c SET c.accountValue = c.accountValue - :value WHERE c.id = :id")
-    ClientEntity subtractFromAccountValueById(Long id, Double value);
+    @Query("UPDATE ClientEntity c SET c.accountValue = c.accountValue - :value WHERE c.id = :id")
+    void subtractFromAccountValueById(Long id, Double value);
 
 }

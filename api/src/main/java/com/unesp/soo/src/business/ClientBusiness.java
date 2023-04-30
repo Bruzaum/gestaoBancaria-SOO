@@ -4,7 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.unesp.soo.src.dtos.ClientDTO;
+import com.unesp.soo.src.dtos.DepositDTO;
 import com.unesp.soo.src.dtos.InsertingClientDTO;
+import com.unesp.soo.src.dtos.TransferDTO;
+import com.unesp.soo.src.dtos.WithdrawDTO;
+import com.unesp.soo.src.enums.RESTStatusEnum;
+import com.unesp.soo.src.exceptions.APIException;
 import com.unesp.soo.src.services.ClientService;
 
 import jakarta.transaction.Transactional;
@@ -15,37 +20,52 @@ public class ClientBusiness {
     @Autowired
     private ClientService service;
 
-    public void newClient(InsertingClientDTO insertingClientDTO) {
-        service.insertClient(insertingClientDTO);
+    public ClientDTO newClient(InsertingClientDTO insertingClientDTO) {
+        return service.insertClient(insertingClientDTO);
     }
 
     public ClientDTO getClient(Long id) {
         return service.findById(id);
     }
 
-    public ClientDTO deposit(Long id, double value) {
-        return service.sumIntoAccountValueById(id, value);
+    public ClientDTO deposit(DepositDTO deposit) {
+        service.sumIntoAccountValueById(deposit.getClientId(), deposit.getValue());
+        return getClient(deposit.getClientId());
     }
 
-    public ClientDTO withdraw(Long id, double value) {
-        ClientDTO client = service.findById(id);
+    public ClientDTO withdraw(WithdrawDTO withdraw) {
+        ClientDTO client = service.findById(withdraw.getClientId());
 
-        if (client.getAccountValue() >= value) {
-            return service.subtractFromAccountValueById(id, value);
+        if (client.getAccountValue() >= withdraw.getValue()) {
+            service.subtractFromAccountValueById(
+                withdraw.getClientId(),
+                withdraw.getValue()
+            );
+
+            return getClient(withdraw.getClientId());
         }
 
         return null;
     }
 
     @Transactional
-    public void transferBetweenClients(Long senderId, Long receiverId, double value) {
-        ClientDTO sender = service.findById(senderId);
-
-        if (sender.getAccountValue() >= value) {
-            service.subtractFromAccountValueById(senderId, value);
-            service.sumIntoAccountValueById(receiverId, value);
+    public String transferBetweenClients(TransferDTO transferDTO) throws APIException {
+        if (transferDTO.getSenderId() == transferDTO.getReceiverId()) {
+            throw new APIException("You cant make a transference for yourself.", RESTStatusEnum.BAD_REQUEST.code);
+        }
+        
+        ClientDTO sender = service.findById(transferDTO.getSenderId());
+        
+        if (sender.getAccountValue() < transferDTO.getValue()) {
+            throw new APIException(
+                "The amount available in the account was less than the amount to be transferred. Please check account balance.", 
+                RESTStatusEnum.BAD_REQUEST.code
+            );
         }
 
-        return;
+        service.subtractFromAccountValueById(transferDTO.getSenderId(), transferDTO.getValue());
+        service.sumIntoAccountValueById(transferDTO.getReceiverId(), transferDTO.getValue());
+
+        return "Transaction made successfully!";
     }
 }

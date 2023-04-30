@@ -1,0 +1,15 @@
+com\unesp\soo\src\dtos\APIResponseDTO.class
+com\unesp\soo\src\repositories\ClientRepository.class
+com\unesp\soo\src\dtos\TransferDTO.class
+com\unesp\soo\BankManagementApplication.class
+com\unesp\soo\src\dtos\DepositDTO.class
+com\unesp\soo\src\entities\ClientEntity.class
+com\unesp\soo\src\controller\ClientsController.class
+com\unesp\soo\src\business\ClientBusiness.class
+com\unesp\soo\src\dtos\ClientDTO$ClientDTOBuilder.class
+com\unesp\soo\src\entities\ClientEntity$ClientEntityBuilder.class
+com\unesp\soo\src\dtos\InsertingClientDTO$InsertingClientDTOBuilder.class
+com\unesp\soo\src\services\ClientService.class
+com\unesp\soo\src\dtos\ClientDTO.class
+com\unesp\soo\src\dtos\WithdrawDTO.class
+com\unesp\soo\src\dtos\InsertingClientDTO.class
