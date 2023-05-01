@@ -6,3 +6,10 @@ CREATE TABLE `clients` (
 
   CONSTRAINT client_unique_cpf UNIQUE (cpf)
 );
+
+CREATE TABLE `transactions` (
+  `id` integer not null PRIMARY KEY,
+  `user_id` INTEGER  not null,
+  `type` varchar(255)  not null,
+  `value` number not null,
+);
