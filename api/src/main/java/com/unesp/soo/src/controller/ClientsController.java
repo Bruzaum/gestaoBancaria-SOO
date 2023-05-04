@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.unesp.soo.src.business.ClientBusiness;
 import com.unesp.soo.src.business.TransactionBusiness;
 import com.unesp.soo.src.dtos.APIResponseDTO;
-import com.unesp.soo.src.dtos.ListAPIResponseDTO;
 import com.unesp.soo.src.dtos.ClientDTO;
 import com.unesp.soo.src.dtos.DepositDTO;
 import com.unesp.soo.src.dtos.InsertingClientDTO;
@@ -55,12 +54,12 @@ public class ClientsController {
     }
 
     @RequestMapping("/history/{id}")
-    public ListAPIResponseDTO<TransactionDTO> clientHistory(@PathVariable("id") Long id, HttpServletResponse response) {
+    public APIResponseDTO<List<TransactionDTO>> clientHistory(@PathVariable("id") Long id, HttpServletResponse response) {
         try{
             List<TransactionDTO> client = tBusiness.getClientHistory(id);
 
             response.setStatus(RESTStatusEnum.OK.code); 
-            return new ListAPIResponseDTO<TransactionDTO>(
+            return new APIResponseDTO<List<TransactionDTO>>(
                 RESTStatusEnum.OK.code,
                 client
             ); 
@@ -68,7 +67,7 @@ public class ClientsController {
         } catch(Exception e){
 
             response.setStatus(RESTStatusEnum.INTERNAL_SERVER_ERROR.code); 
-            return new ListAPIResponseDTO<TransactionDTO>(
+            return new APIResponseDTO<>(
                 RESTStatusEnum.INTERNAL_SERVER_ERROR.code,
                 null
             );
